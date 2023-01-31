@@ -45,15 +45,15 @@ $con,
 
 ?>
 
-<?php while ($item = mysqli_fetch_array($vysledek)) { ?>
-        <table border="1" border-color="black"  style="width: 600px;">
+<?php while ($radek = mysqli_fetch_array($vysledek)) { ?>
+    <table border="1" border-color="black"  style="width: 600px;">
         <tr>
             <th>ID Otazky:</th>
-            <td><?php echo $item['id_ankety']; ?></td>
+            <td><?php echo $radek['id_ankety']; ?></td>
         </tr>
         <tr>
             <th>Dotaz:</th>
-            <td><?php echo $item['dotaz_ankety']; ?></td>
+            <td><?php echo $radek['dotaz_ankety']; ?></td>
         </tr>
         <tr>
             <th>Odpoved</th>
@@ -61,20 +61,21 @@ $con,
         </tr>
         
         <?php
-    if (!($vysledekOdp = mysqli_query($con, "SELECT id_odpovedi, o.id_ankety, odpoved, hlasy FROM odpovedi as o WHERE o.id_ankety = '" . $item['id_ankety'] . "'"))) {
+    if (!($vysledekOdp = mysqli_query($con, "SELECT id_odpovedi, o.id_ankety, odpoved, hlasy FROM odpovedi as o WHERE o.id_ankety = '" . $radek['id_ankety'] . "'"))) {
         die("Nelze provest dotaz.</body></html>");
     }
     else {
-        while ($itemOdp = mysqli_fetch_array($vysledekOdp)) { ?>
-            <tr>
+        while ($radekOdpoved = mysqli_fetch_array($vysledekOdp)) { ?>
+
+                <tr>
                 <td>
-                    <?php echo $itemOdp['odpoved']; ?>
+                    <?php echo $radekOdpoved['odpoved']; ?>
                 </td>
                 <td>
-                    <a href="?id=<?php echo $itemOdp['id_odpovedi'] ?>"><?php echo $itemOdp['hlasy']; ?></a>
+                    <a href="?id=<?php echo $radekOdpoved['id_odpovedi'] ?>"><button><?php echo $radekOdpoved['hlasy']; ?></button></a>
                 </td>
             </tr>
-    <?php
+        <?php
         }?>
         </td>
         </table>
